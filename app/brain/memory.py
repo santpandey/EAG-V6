@@ -1,5 +1,12 @@
 from pydantic import BaseModel
 from typing import List, Any
+from mcp.server.fastmcp import FastMCP
+from mcp.types import TextContent
+from rich.console import Console
+from rich.panel import Panel
+
+console = Console()
+mcp = FastMCP("MemoryMCP")
 
 class MemoryItem(BaseModel):
     type: str  # e.g., 'preference', 'fact', 'answer'

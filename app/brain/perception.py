@@ -1,5 +1,12 @@
 from pydantic import BaseModel
 from typing import Any, Dict
+from mcp.server.fastmcp import FastMCP
+from mcp.types import TextContent
+from rich.console import Console
+from rich.panel import Panel
+
+console = Console()
+mcp = FastMCP("PerceptionMCP")
 
 class LLMRequest(BaseModel):
     prompt: str
