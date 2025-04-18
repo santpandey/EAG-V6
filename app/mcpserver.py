@@ -15,6 +15,10 @@ mcp = FastMCP("MCPServer")
 # Persistent memory store for all users
 memory_store = MemoryStore()
 
+def get_system_prompt():
+    with open("app/system_prompt.txt", "r", encoding="utf-8") as f:
+        return f.read()
+
 def orchestrate(message: str, username: str, download_summary: bool = False, email: str = None):
     """
     Orchestrates the routing of the message to the appropriate brain module.
@@ -29,8 +33,10 @@ def orchestrate(message: str, username: str, download_summary: bool = False, ema
         memory_store.add_item(MemoryItem(user=username, content=message))
     # Pass only this user's memory to DecisionInput
     user_memory_store = MemoryStore(items=memory_store.get_items_by_user(username))
+    # Read system prompt from file
+    system_prompt = get_system_prompt()
     decision_input = DecisionInput(user_input=message, memory=user_memory_store)
-    decision_output = craft_prompt(decision_input)
+    decision_output = craft_prompt(decision_input, system_prompt=system_prompt)
     response = {"crafted_prompt": decision_output.crafted_prompt}
     if download_summary:
         response["download_summary"] = True
