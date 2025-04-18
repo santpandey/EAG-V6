@@ -68,7 +68,11 @@ def orchestrate(message: str, username: str, download_summary: bool = False, sen
     if download_summary:
         crafted_prompt = f"{decision_output.crafted_prompt}\n\nSummarize Prompt:\nCould you please summarize the prompt?\n\n"
         llm_summary_response = call_external_llm(LLMRequest(prompt=crafted_prompt))
+        # Write summary to summary.txt
+        with open("summary.txt", "w", encoding="utf-8") as f:
+            f.write(llm_summary_response.response)
         response["download_summary"] = llm_summary_response.response
+        response["summary_file"] = os.path.abspath("summary.txt")
     if send_email and email:
         response["email_sent_to"] = email
     if image is not None:
