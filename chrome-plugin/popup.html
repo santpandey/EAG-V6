@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blood Report Analyzer</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Blood Report Analyzer</h2>
+        <label for="usernameBox">Enter your name</label>
+        <input type="text" id="usernameBox" placeholder="Your name" />
+        <button id="saveNameBtn">Save Name</button>
+        <div id="nameStatus"></div>
+        <input type="file" id="imageInput" accept="image/*" style="display:none" />
+        <button id="uploadBtn" disabled>Upload Blood Report Image</button>
+        <div id="uploadStatus"></div>
+        <label for="questionBox">Ask Questions</label>
+        <input type="text" id="questionBox" placeholder="e.g. What's my haemoglobin level?" disabled />
+        <button id="submitBtn" disabled>Submit</button>
+        <div id="responseContainer"></div>
+        <button id="downloadSummaryBtn">Download Summary</button>
+        <div style="margin-top:10px;"></div>
+        <input type="email" id="emailInput" placeholder="Enter email address" />
+        <button id="sendEmailBtn">Send an email</button>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
