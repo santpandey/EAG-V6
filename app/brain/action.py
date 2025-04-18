@@ -1,12 +1,6 @@
 from pydantic import BaseModel
 from .perception import LLMResponse
-from mcp.server.fastmcp import FastMCP
-from mcp.types import TextContent
-from rich.console import Console
-from rich.panel import Panel
 
-console = Console()
-mcp = FastMCP("ActionMCP")
 
 class ActionInput(BaseModel):
     llm_response: LLMResponse

@@ -19,10 +19,10 @@
         <input type="text" id="questionBox" placeholder="e.g. What's my haemoglobin level?" disabled />
         <button id="submitBtn" disabled>Submit</button>
         <div id="responseContainer"></div>
-        <button id="downloadSummaryBtn">Download Summary</button>
         <div style="margin-top:10px;"></div>
-        <input type="email" id="emailInput" placeholder="Enter email address" />
-        <button id="sendEmailBtn">Send an email</button>
+<label><input type="checkbox" id="downloadSummaryCheckbox"> Download Summary</label><br>
+<label><input type="checkbox" id="sendEmailCheckbox"> Send Email</label>
+<input type="email" id="emailInput" placeholder="Enter email address" style="display:none; margin-left:10px;" />
     </div>
     <script src="popup.js"></script>
 </body>
