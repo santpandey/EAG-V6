@@ -3,6 +3,7 @@ from mcp.types import TextContent
 from rich.console import Console
 from app.brain.memory import MemoryStore, MemoryItem
 from app.brain.perception import LLMRequest, call_external_llm
+from app.brain.action import ResponseModel
 from app.brain.decision_making import craft_prompt
 from app.brain.action import perform_action
 from app.brain.decision_making import DecisionInput
@@ -63,20 +64,25 @@ def orchestrate(message: str, username: str, download_summary: bool = False, sen
     # Pass image_b64 to LLMRequest if needed
     llm_request = LLMRequest(prompt=decision_output.crafted_prompt, image_b64=image_b64)
     llm_response = call_external_llm(llm_request)
-    response = {"crafted_prompt": llm_response.response}
-    
+    response_data = {
+        "crafted_prompt": llm_response.response,
+        "download_summary": None,
+        "summary_file": None,
+        "email_sent_to": None,
+        "image_filename": None
+    }
     if download_summary:
         crafted_prompt = f"{decision_output.crafted_prompt}\n\nSummarize Prompt:\nCould you please summarize the prompt?\n\n"
         llm_summary_response = call_external_llm(LLMRequest(prompt=crafted_prompt))
         # Write summary to summary.txt
         with open("summary.txt", "w", encoding="utf-8") as f:
             f.write(llm_summary_response.response)
-        response["download_summary"] = llm_summary_response.response
-        response["summary_file"] = os.path.abspath("summary.txt")
+        response_data["download_summary"] = llm_summary_response.response
+        response_data["summary_file"] = os.path.abspath("summary.txt")
     if send_email and email:
-        response["email_sent_to"] = email
+        response_data["email_sent_to"] = email
     if image is not None:
-        response["image_filename"] = image.filename
-    return response
+        response_data["image_filename"] = image.filename
+    return ResponseModel(**response_data)
 
     
